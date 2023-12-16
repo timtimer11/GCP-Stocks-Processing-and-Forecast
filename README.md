@@ -2,7 +2,7 @@
 ## Overview
 This project sets up an end-to-end data pipeline to extract, load and tranform stocks data for MAANG companies (Meta, Amazon, Apple, Netflix, Google) using Google Cloud Platform infrastructure. The pipeline consists of fetching data from Polygon.io API with Cloud Function, publishing it to Pub/Sub, storing it in Cloud Storage, transforming and finally, loading it into BigQuery table.
 
-[[pipeline_diagram.png]]
+![DIAGRAM!](pipeline_diagram.png)
 
 ## Components
 ### Cloud Function 1:
