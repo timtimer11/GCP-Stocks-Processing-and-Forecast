@@ -4,7 +4,7 @@ This project sets up an end-to-end data pipeline to extract, load and tranform s
 
 ## Components
 ### Cloud Function 1:
-- get_data_api.py: A script fetching stocks data for MAANG companies in JSON format using Polygon.io API.
+- get_stocks_api.py: A script fetching stocks data for MAANG companies in JSON format using Polygon.io API.
 - main.py: A script publishing the JSON data into a Pub/Sub topic.
 
 ### Cloud Function 2:
