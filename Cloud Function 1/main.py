@@ -19,7 +19,7 @@ def callback(future):
     except Exception as ex:
         print(f"Error publishing message: {ex}")
 
-def publish_to_pubsub():
+def publish_to_pubsub(event, context):
     data = get_stocks_data()
     json_bytes = data.encode("utf-8")
 
