@@ -4,7 +4,7 @@ from typing import cast
 from urllib3 import HTTPResponse
 import datetime
 
-client = RESTClient(api_key="AG8o_yf7fpYVUiFyJMkNH5LoisaWtueU", trace=False)
+client = RESTClient(api_key="<API_KEY>", trace=False)
 
 maang_companies = ["META", "AAPL", "AMZN", "GOOGL", "NFLX"]
 
