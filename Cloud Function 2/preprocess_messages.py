@@ -2,20 +2,25 @@ from google.cloud import storage
 from google.oauth2 import service_account
 import pandas as pd
 import json 
+from datetime import datetime
 
-credentials = service_account.Credentials.from_service_account_file("/Users/timur/Desktop/StockApp/credentials/sa_creds.json")
-bucket_name = "stocks-historical-data"
-source_blob_name = "2023-12-09T09:59:09+00:00_33ecd8"
+credentials = service_account.Credentials.from_service_account_file("credentials.json")
+bucket_name = "<BUCKET_NAME>"
 
-def download_blob(bucket_name, source_blob_name, credentials):
+def download_blob(bucket_name, credentials):
+    today = datetime.today().strftime("%Y-%m-%dT")
+    source_blob_prefix = f"{today}"
     storage_client = storage.Client(credentials=credentials)
     bucket = storage_client.bucket(bucket_name)
-    blob = bucket.get_blob(source_blob_name)
-    contents = blob.download_as_string()
-    return contents
+    blobs = list(bucket.list_blobs(prefix=source_blob_prefix))
+    if not blobs:
+        raise Exception(f"No blobs found matching '{source_blob_prefix}'")
+    latest_blob = blobs[-1]
+    content = latest_blob.download_as_string()
+    return content
 
 def get_dataframe():
-    blob = download_blob(bucket_name, source_blob_name, credentials)
+    blob = download_blob(bucket_name, credentials)
     data = json.loads(blob)
     extracted_data = []
     for key, value in data.items():
@@ -36,3 +41,4 @@ def get_dataframe():
     df = pd.DataFrame(extracted_data)
     df = df.rename(columns={"ticker": "stock_symbol", "v": "trading_volume", "vw": "volume_weighted_avg_price", "o": "open_price", "c": "close_price", "h": "highest_price", "l": "lowest_price", "t": "unix_timestamp", "n": "number_of_transactions"})
     return df
+
