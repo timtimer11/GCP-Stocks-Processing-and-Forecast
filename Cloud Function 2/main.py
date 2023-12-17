@@ -10,7 +10,7 @@ credentials = service_account.Credentials.from_service_account_file("credentials
 client = bigquery.Client(credentials=credentials)
 
 current_date = datetime.datetime.now().strftime("%Y%m%d")
-table_id = f"stockswhatsup.stocks_data.{current_date}"
+table_id = f"<PROJECT_ID>.<DATABASE_ID>.{current_date}"
 def load_to_bq(event, context):
   dataframe = get_dataframe()
 
