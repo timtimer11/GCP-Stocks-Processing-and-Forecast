@@ -5,11 +5,11 @@ from google.oauth2 import service_account
 import json
 from get_stocks_by_api import get_stocks_data
 
-credentials = service_account.Credentials.from_service_account_file("/Users/timur/Desktop/StockApp/credentials/sa_creds.json")
+credentials = service_account.Credentials.from_service_account_file("credentials.json")
 publisher = pubsub_v1.PublisherClient(credentials=credentials)
 
-project_id = "stockswhatsup"
-topic_id = "stocks-data"
+project_id = "<PROJECT_ID>"
+topic_id = "<TOPIC_ID>"
 topic_path = publisher.topic_path(project_id, topic_id)
 
 def callback(future):
