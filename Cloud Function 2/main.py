@@ -6,7 +6,7 @@ import pytz
 from google.oauth2 import service_account
 import json
 
-credentials = service_account.Credentials.from_service_account_file("/Users/timur/Desktop/StockApp/credentials/sa_creds.json")
+credentials = service_account.Credentials.from_service_account_file("credentials.json")
 client = bigquery.Client(credentials=credentials)
 
 current_date = datetime.datetime.now().strftime("%Y%m%d")
