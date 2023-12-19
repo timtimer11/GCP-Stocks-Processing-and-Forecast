@@ -5,19 +5,21 @@ import json
 from datetime import datetime
 
 credentials = service_account.Credentials.from_service_account_file("credentials.json")
-bucket_name = "<BUCKET_NAME>"
+bucket_name = "stocks-historical-data"
 
 def download_blob(bucket_name, credentials):
-    today = datetime.today().strftime("%Y-%m-%dT")
-    source_blob_prefix = f"{today}"
     storage_client = storage.Client(credentials=credentials)
     bucket = storage_client.bucket(bucket_name)
-    blobs = list(bucket.list_blobs(prefix=source_blob_prefix))
-    if not blobs:
-        raise Exception(f"No blobs found matching '{source_blob_prefix}'")
-    latest_blob = blobs[-1]
-    content = latest_blob.download_as_string()
-    return content
+    today_blob_prefix = datetime.today().strftime("%Y-%m-%dT")    
+    today_blob_names = bucket.list_blobs(prefix=today_blob_prefix)
+    if not today_blob_names:
+        raise Exception(f"No blobs found matching '{today_blob_prefix}'")
+    blob_list = []
+    for blob in today_blob_names:
+        blob_list.append(blob.name)
+    blob = bucket.get_blob(blob_list[-1])
+    contents = blob.download_as_string()
+    return contents
 
 def get_dataframe():
     blob = download_blob(bucket_name, credentials)
