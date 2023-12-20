@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 credentials = service_account.Credentials.from_service_account_file("credentials.json")
-bucket_name = "stocks-historical-data"
+bucket_name = "<BUCKET-NAME>"
 
 def download_blob(bucket_name, credentials):
     storage_client = storage.Client(credentials=credentials)
@@ -43,4 +43,3 @@ def get_dataframe():
     df = pd.DataFrame(extracted_data)
     df = df.rename(columns={"ticker": "stock_symbol", "v": "trading_volume", "vw": "volume_weighted_avg_price", "o": "open_price", "c": "close_price", "h": "highest_price", "l": "lowest_price", "t": "unix_timestamp", "n": "number_of_transactions"})
     return df
-
