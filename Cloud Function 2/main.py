@@ -12,8 +12,8 @@ client = bigquery.Client(credentials=credentials)
 today = datetime.date.today()
 one_day_prior = today - datetime.timedelta(days=1)
 table_name_by_date = one_day_prior.strftime("%Y%m%d")
-single_table_id = f"stockswhatsup.stocks_data.{table_name_by_date}"
-all_data_table_id = "stockswhatsup.stocks_data_historical.stocks_data_all"
+single_table_id = f"<PROJECT_ID>.<DATASET_ID>.{table_name_by_date}"
+all_data_table_id = "<PROJECT_ID>.<DATASET_ID>.<TABLE_ID>"
 
 def load_to_bq(event, context):
   dataframe = get_dataframe()
