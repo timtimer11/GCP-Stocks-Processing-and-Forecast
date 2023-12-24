@@ -2,15 +2,16 @@ from google.cloud import storage
 from google.oauth2 import service_account
 import pandas as pd
 import json 
-from datetime import datetime
+import datetime
 
 credentials = service_account.Credentials.from_service_account_file("credentials.json")
-bucket_name = "<BUCKET-NAME>"
+bucket_name = "<BUCKET_NAME>"
 
 def download_blob(bucket_name, credentials):
     storage_client = storage.Client(credentials=credentials)
     bucket = storage_client.bucket(bucket_name)
-    today_blob_prefix = datetime.today().strftime("%Y-%m-%dT")    
+    today = datetime.date.today() - datetime.timedelta(days=1)
+    today_blob_prefix = today.strftime("%Y-%m-%dT")
     today_blob_names = bucket.list_blobs(prefix=today_blob_prefix)
     if not today_blob_names:
         raise Exception(f"No blobs found matching '{today_blob_prefix}'")
@@ -41,5 +42,10 @@ def get_dataframe():
             extracted_data.append(row)
     # Convert the extracted data to a DataFrame
     df = pd.DataFrame(extracted_data)
+    today = datetime.date.today()
+    one_day_prior = today - datetime.timedelta(days=1)
+    date_column_value = one_day_prior.strftime("%Y-%m-%d")
+    df['date'] = pd.to_datetime(date_column_value, format="%Y-%m-%d")
     df = df.rename(columns={"ticker": "stock_symbol", "v": "trading_volume", "vw": "volume_weighted_avg_price", "o": "open_price", "c": "close_price", "h": "highest_price", "l": "lowest_price", "t": "unix_timestamp", "n": "number_of_transactions"})
     return df
+
