@@ -8,6 +8,16 @@ credentials = service_account.Credentials.from_service_account_file("credentials
 bucket_name = "<BUCKET_NAME>"
 
 def download_blob(bucket_name, credentials):
+    """
+    Downloads a blob from a specified bucket.
+
+    Args:
+        bucket_name (str): The name of the bucket.
+        credentials (str): The credentials needed to access the bucket.
+
+    Returns:
+        bytes: The contents of the downloaded blob.
+    """
     storage_client = storage.Client(credentials=credentials)
     bucket = storage_client.bucket(bucket_name)
     today = datetime.date.today() - datetime.timedelta(days=1)
@@ -23,6 +33,12 @@ def download_blob(bucket_name, credentials):
     return contents
 
 def get_dataframe():
+    """
+    Retrieves data from a blob and converts it into a Pandas DataFrame.
+    
+    Returns:
+        df (DataFrame): The extracted data converted into a DataFrame.
+    """
     blob = download_blob(bucket_name, credentials)
     data = json.loads(blob)
     extracted_data = []
