@@ -29,5 +29,4 @@ Cloud Storage bucket that stores all data passed from PubSub topic "stocks-data"
 Jupyter Notebook trained with ARIMA model on the historical data (2 years data + daily dump from API). Returns dataframe with forecasted values for each stock, and uploads the data back to the corresponding BigQuery table.
 
 ### BigQuery
-Data warehouse to store data for each day in separate tables.  
-
+Data warehouse to store daily, historical, and forecasted tables.
