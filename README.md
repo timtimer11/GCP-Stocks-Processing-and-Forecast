@@ -26,7 +26,7 @@ Responsible for sending a message into PubSub topic "stocks-function-trigger" ev
 Cloud Storage bucket that stores all data passed from PubSub topic "stocks-data".
 
 ### VertexAi Notebook
-Jupyter Notebook to train ARIMA model, forecast weighted volume average price for each stock, and upload forecasted data to the corresponding BigQuery table.
+Jupyter Notebook trained with ARIMA model on the historical data (2 years data + daily dump from API). Returns forecasted weighted volume average price dataframe for each stock, and uploads the data back to the corresponding BigQuery table.
 
 ### BigQuery
 Data warehouse to store data for each day in separate tables.  
