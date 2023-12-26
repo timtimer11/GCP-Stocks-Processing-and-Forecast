@@ -13,6 +13,15 @@ topic_id = "<TOPIC_ID>"
 topic_path = publisher.topic_path(project_id, topic_id)
 
 def callback(future):
+    """
+    Callback function that handles the result of a future.
+
+    Parameters:
+        future (Future): The future object representing the asynchronous operation.
+
+    Returns:
+        None
+    """
     try:
         message_id = future.result()
         print(f"Published message with ID: {message_id}")
@@ -20,6 +29,16 @@ def callback(future):
         print(f"Error publishing message: {ex}")
 
 def publish_to_pubsub(event, context):
+    """
+    Publishes data to a Pub/Sub topic.
+
+    Args:
+        event (dict): The event payload.
+        context (google.cloud.functions.Context): The event metadata.
+
+    Returns:
+        None
+    """
     data = get_stocks_data()
     json_bytes = data.encode("utf-8")
 
