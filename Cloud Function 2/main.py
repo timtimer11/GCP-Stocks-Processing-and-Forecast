@@ -16,11 +16,16 @@ single_table_id = f"<PROJECT_ID>.<DATASET_ID>.{table_name_by_date}"
 all_data_table_id = "<PROJECT_ID>.<DATASET_ID>.<TABLE_ID>"
 
 def load_to_bq(event, context):
+  """
+  Loads the data from a dataframe into BigQuery.
+
+  Returns:
+      None
+  """
   dataframe = get_dataframe()
 
   single_table_job_config = bigquery.LoadJobConfig(
       schema=[
-          bigquery.SchemaField("date", bigquery.enums.SqlTypeNames.DATE),
           bigquery.SchemaField("stock_symbol", bigquery.enums.SqlTypeNames.STRING),
           bigquery.SchemaField("trading_volume", bigquery.enums.SqlTypeNames.FLOAT),
           bigquery.SchemaField("volume_weighted_avg_price", bigquery.enums.SqlTypeNames.FLOAT),
@@ -30,6 +35,7 @@ def load_to_bq(event, context):
           bigquery.SchemaField("lowest_price", bigquery.enums.SqlTypeNames.FLOAT),
           bigquery.SchemaField("unix_timestamp", bigquery.enums.SqlTypeNames.INT64),
           bigquery.SchemaField("number_of_transactions", bigquery.enums.SqlTypeNames.INT64),
+          bigquery.SchemaField("date", bigquery.enums.SqlTypeNames.DATE)
       ],
       write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
   )
@@ -39,7 +45,6 @@ def load_to_bq(event, context):
 
   historical_table_job_config = bigquery.LoadJobConfig(
       schema=[
-          bigquery.SchemaField("date", bigquery.enums.SqlTypeNames.DATE),
           bigquery.SchemaField("stock_symbol", bigquery.enums.SqlTypeNames.STRING),
           bigquery.SchemaField("trading_volume", bigquery.enums.SqlTypeNames.FLOAT),
           bigquery.SchemaField("volume_weighted_avg_price", bigquery.enums.SqlTypeNames.FLOAT),
@@ -49,6 +54,7 @@ def load_to_bq(event, context):
           bigquery.SchemaField("lowest_price", bigquery.enums.SqlTypeNames.FLOAT),
           bigquery.SchemaField("unix_timestamp", bigquery.enums.SqlTypeNames.INT64),
           bigquery.SchemaField("number_of_transactions", bigquery.enums.SqlTypeNames.INT64),
+          bigquery.SchemaField("date", bigquery.enums.SqlTypeNames.DATE),
       ]
   )
   historical_table_job = client.load_table_from_dataframe(
