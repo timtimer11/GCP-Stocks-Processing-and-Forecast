@@ -1,6 +1,6 @@
 # Stocks Data ETL & Forecast Pipeline on Google Cloud Platform
 ## Overview
-This project sets up an end-to-end data pipeline to extract, load and tranform stocks data for MAANG companies (Meta, Amazon, Apple, Netflix, Google) using Google Cloud Platform infrastructure. The pipeline consists of fetching data from Polygon.io API with Cloud Function, publishing it to Pub/Sub, storing it in Cloud Storage, transforming and finally, loading it into BigQuery table.
+This project sets up an end-to-end data pipeline to extract, load, and transform stocks data for MAANG companies (Meta, Amazon, Apple, Netflix, Google), as well as forecast the weighted volume average stock price in the Google Cloud Platform infrastructure. The pipeline consists of fetching data from Polygon.io API with Cloud Function, publishing it to Pub/Sub, storing it in Cloud Storage, transforming and loading it into BigQuery table. The final stage of the pipeline is the forecast with ARIMA model using Vertex Ai and uploading forecasted data to BigQuery.
 
 ![DIAGRAM!](pipeline_design.png)
 
