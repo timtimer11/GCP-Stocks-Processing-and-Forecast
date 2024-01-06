@@ -1,6 +1,6 @@
 # Stocks Data ETL & Forecast Pipeline on Google Cloud Platform
 ## Overview
-This project sets up an end-to-end data pipeline to extract, load, and transform stocks data for MAANG companies (Meta, Amazon, Apple, Netflix, Google), as well as forecast the weighted volume average stock price in the Google Cloud Platform infrastructure. The pipeline consists of fetching data from Polygon.io API with Cloud Function, publishing it to Pub/Sub, storing it in Cloud Storage, transforming and loading it into BigQuery table. The final stage of the pipeline is the forecast with ARIMA model using Vertex Ai and uploading forecasted data to BigQuery.
+This project sets up an end-to-end data pipeline to extract, load, and transform stocks data for MAANG companies (Meta, Amazon, Apple, Netflix, Google), as well as forecast the weighted volume average stock price in the Google Cloud Platform infrastructure. The pipeline consists of fetching data from Polygon.io API with Cloud Function, publishing it to Pub/Sub, storing it in Cloud Storage, transforming and loading it into BigQuery table. The final stage of the pipeline is the forecast with Auto ARIMA model using Vertex Ai and uploading forecasted data to BigQuery.
 
 ![DIAGRAM!](pipeline_design.png)
 
@@ -26,7 +26,7 @@ Responsible for sending a message into PubSub topic "stocks-function-trigger" ev
 Cloud Storage bucket that stores all data passed from PubSub topic "stocks-data".
 
 ### VertexAi Notebook
-Jupyter Notebook trained with ARIMA model on the historical data (2 years data + daily dump from API). Returns dataframe with forecasted values for each stock, and uploads the data back to the corresponding BigQuery table.
+Jupyter Notebook trained with Auto ARIMA model on the historical data (2 years data + daily dump from API). Uploads the forecasted data to the corresponding BigQuery table.
 
 ### BigQuery
 Data warehouse to store daily, historical, and forecasted tables.
